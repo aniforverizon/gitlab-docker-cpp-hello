@@ -1,0 +1,2 @@
+add_subdirectory(HelloLib)
+add_subdirectory(HelloApp)

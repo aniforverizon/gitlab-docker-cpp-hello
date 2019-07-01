@@ -1,0 +1,8 @@
+FROM alpine:3.9
+MAINTAINER  mohaila
+ENV PATH=$PATH:/app
+RUN apk add --no-cache libstdc++ && \
+    mkdir /app
+ADD Build/bin/* /app/
+WORKDIR /app
+ENTRYPOINT ["hello"]

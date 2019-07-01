@@ -1,0 +1,38 @@
+stages:
+  - build project
+  - test project
+  - build docker image
+
+build cxx porject:
+  image: alpine-gcc:3.9
+  stage: build project
+  tags: 
+    - cxx
+  script:
+    - mkdir Build
+    - cd Build
+    - cmake -G Ninja ..
+    - ninja
+  artifacts:
+    paths:
+      - Build
+
+test cxx project:
+  image: alpine-gcc:3.9
+  stage: test project
+  tags:
+    - cxx
+  script:
+    - cd Build
+    - ctest
+  artifacts:
+    paths:
+      - Build/bin
+      
+build docker image:
+  image: docker:stable
+  stage: build docker image
+  tags:
+    - docker
+  script:
+    - docker build -t helloapp:latest -f Dockerfile.deploy .    
